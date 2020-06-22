@@ -4,25 +4,25 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Registration</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
         <div>Register yourself on this amazing new Linkedin type thing!</div>
         
-        <form action="/registrationcompleted" method="POST">
-            <label>User name:</label><br>
-    <input type="text" name="username"/><br>
-    <label>Password:</label><br>
-    <input type="text" name="password"/><br>
-     <label>Your name:</label><br>
-   <input type="text" name="realname"/><br>
-    <label>Give string of letters or numbers so your URL can be recognised. TÄHÄN PAREMPI TEKSTI</label><br>
-   <input type="text" name="profileidentificationstring"/><br>
-    <input type="submit"/>
+        <form action="/registration"  method="POST">
+            <label>User name:</label><br/>
+    <input type="text" name="username"/><br/>
+    <label>Password:</label><br/>
+    <input type="password" name="password"/><br/>
+     <label>Your name:</label><br/>
+   <input type="text" name="realname"/><br/>
+    <label>Give string of letters or numbers so your URL can be recognised. TÄHÄN PAREMPI TEKSTI</label><br/>
+   <input type="text" name="profileidentificationstring"/><br/>
+    <input type="submit" value="Register"/>
 </form>
         
         

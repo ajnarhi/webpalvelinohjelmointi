@@ -6,13 +6,17 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Registration succesfull</title>
+        <title>Sign in!</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Registration succesfull!</div>
-        
-<p><a href="/profile">Go to your profile!</a></p>
+        <div>Sign in</div>
+        <form action="/signin"  method="POST">
+            <label>User name:</label><br/>
+    <input type="text" name="username"/><br/>
+    <label>Password:</label><br/>
+    <input type="password" name="password"/><br/>
+    <input type="submit" value="Sign in!"/>
     </body>
 </html>
