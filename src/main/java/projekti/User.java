@@ -6,7 +6,10 @@
 package projekti;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -30,6 +33,12 @@ public class User extends AbstractPersistable<Long>{
     private String password;
     private String realname;
     private String profileidentificationstring;
+    @OneToMany(mappedBy = "user")
+    private List<Skill> skills= new ArrayList<>();
+    @OneToMany(mappedBy="whoasked")
+    private List<Connection>connections=new ArrayList<>();
+    @OneToMany(mappedBy="whowasasked")
+    private List<Connection>askedconnections=new ArrayList<>();
     
 }
 

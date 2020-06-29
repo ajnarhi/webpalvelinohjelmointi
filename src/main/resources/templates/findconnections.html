@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Find connections</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div>
+            <h1>Find connections from winkedin!</h1>
+            <form th:action="@{/findconnections}"  method="POST">
+                <label>Type in a name of the person you are looking for:</label><br/>
+                <input type="text" name="name"/><br/>
+
+                <input type="submit" value="Search"/>
+            </form>
+        </div>
+        <div>
+            
+            <form th:action="@{/addconnection}"  method="POST">
+        <span th:if="${user!=null}">
+
+            <p>Is this the person you are looking for?</p>
+
+            <h2 th:text="${user.realname}">Name of possible found profile</h2>
+            <input type="hidden" name="name" th:value="${user.username}" />
+            <input type="submit" value="Send connection request!"/>
+            
+            <p>You will find all your pending requests on your profilepage.</p></span>
+        <!--<span th:unless="${user!=null}">                <p>No one with that name. Please try again!</p></span>tähän tarkoitus tulla ilmoitus jos ei löydy ketään tämän nimistä. Nyt se näyttää tämän aina. KORJAA-->
+</form>
+</div>
+
+    </body>
+</html>

@@ -12,11 +12,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author ajnarhi
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface ConnectionRepository extends JpaRepository<Connection, Long>  {
     
-    User findByUsernameAndPassword(String username, String password);
-    User findByUsername(String username);
-    User findByRealname(String realname);
-    User findByProfileidentificationstring (String profileidentificationstring);
+    List<Connection> findByWhowasaskedAndAccepted(User user, Boolean accepted);
+    List<Connection> findByWhoaskedAndAccepted (User user, Boolean accepted);
 
+    
 }

@@ -6,13 +6,81 @@ and open the template in the editor.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
+        <title>Profile</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <div>TÄHÄN TULEE NIMI</div>
-        <h2 th:text="${name}">Henkilön nimi</h2>
-      <div>TÄHÄN TULEE kuva</div>
-    </body>
-</html>
+        <div>
+            <h1>Welcome to your profile</h1>
+            <h2 th:text="${name}">Name of the profileowner</h2>
+        </div>
+
+
+        <div>
+            <h2>Here are your skills you superskilled bastard!</h2>
+            <table>
+                <tr>
+                    <th>Skills</th>
+                </tr>
+
+                <tr th:each="skill : ${skills}">
+                    <td th:text="${skill.nameOfTheSkill}">Skill name</td>
+                </tr>
+            </table>
+
+
+            <p>Did you get yourself a new skill? Add it here so others can compliment you on it.</p>
+            <form th:action="@{/profile}"  method="POST">
+                <label>Type in your new skill:</label><br/>
+                <input type="text" name="skill"/><br/>
+
+                <input type="submit" value="Add skill to your list of skills!"/>
+            </form>
+
+        </div>
+
+        <div><h2>Your connections</h2></div>
+            <div th:each="connection : ${approvedconnections}">
+                <form th:action="@{/cancelconnection}"  method="POST">
+                    <a th:if ="${name==connection.whoasked.realname}"
+                       th:href="@{/profile/{id}(id=${connection.whowasasked.profileidentificationstring})}" 
+                       th:text="${connection.whowasasked.realname}">Connection name</a>
+                    <a th:if ="${name==connection.whowasasked.realname}"
+                       th:href="@{/profile/{id}(id=${connection.whoasked.profileidentificationstring})}" 
+                       th:text="${connection.whoasked.realname}">Connection name</a>
+
+                    <input type="hidden" name="id" th:value="${connection.id}"/>
+
+                    <input type="submit" name="cancel" value="Cancel connection!"/>
+                </form>
+            </div>  
+            <div><h2>Connection requests waiting for approval from the person you sent it for</h2></div>
+                <div th:each="connection : ${waitingforotherpersonsapproval}">
+
+                    <p th:text="${name==connection.whoasked.realname}?${connection.whowasasked.realname}:${connection.whoasked.realname}">Connection name</p>
+
+
+                </div>
+
+
+                <div>
+
+
+
+                    <h2>Connection requests waiting for your approval</h2>
+
+
+                    <div th:each="connection : ${waitingforyourapproval}">
+                        <form th:action="@{/connectionapproval}"  method="POST">
+                            <p th:text="${connection.whoasked.realname}">Connection name</p>
+                            <input type="hidden" name="id" th:value="${connection.id}"/>
+                            <input type="submit" name="accept" value="Add connection!"/>
+                            <input type="submit" name="accept" value="I do not approve this connection!"/>
+                        </form>
+                    </div>
+
+
+                </div>
+                </body>
+                </html>

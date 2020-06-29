@@ -5,10 +5,12 @@
  */
 package projekti;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author ajnarhi
  */
-public class UserController {
+public interface SkillRepository extends JpaRepository<Skill, Long>{
     
 }
