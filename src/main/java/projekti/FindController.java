@@ -37,33 +37,62 @@ public class FindController {
 
     @PostMapping("/findconnections")
     public String searchConnection(@RequestParam String name, Model model) {
-
-        User user = userRepository.findByRealname(name);
-        model.addAttribute("user", user);
+Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //user pitää hakea tässä uudelleen, että saadaan skillsi oikealle käyttäjälle. Muuten se voisi mennä välissä kirjautuneelle esim.
+        String username = auth.getName();                                               //koska on käyttäjä kirjautuneena niin Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
+        User user = userRepository.findByUsername(username);
+        User searcheduser = userRepository.findByRealname(name);
+        if(!user.getRealname().equals(searcheduser.getRealname())){
+        model.addAttribute("user", searcheduser);
 
         return "findconnections";
+        }else{
+            return "triedtofindyourself";
+        }
     }
 
     @PostMapping("/addconnection")
     public String addConnection(@RequestParam String name) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //user pitää hakea tässä uudelleen, että saadaan skillsi oikealle käyttäjälle. Muuten se voisi mennä välissä kirjautuneelle esim.
         String username = auth.getName();                                               //koska on käyttäjä kirjautuneena niin Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
-        User user = userRepository.findByUsername(username);                            //voidaan hakea juuri se käyttäjä.
+        User user = userRepository.findByUsername(username);//voidaan hakea juuri se käyttäjä.
+        Connection connection = new Connection(false, userRepository.findByUsername(name), user); //jos olen jo lähettänyt pyynnön en voi lhettää toista pyyntöä
+        Connection connectionOther=new Connection(true, user, userRepository.findByUsername(name)); // jos toinen tyyppi pyytänyt minua niin en voi tehdä uutta pyyntöä
+        Connection connectionThird=new Connection(true, userRepository.findByUsername(name), user); //on olemassa jo hyväksytty yhteys. en voi enää liätä uutta
+        if (!user.getConnections().contains(connection) && !user.getAskedconnections().contains(connectionOther) && !user.getConnections().contains(connectionThird)) {
+             
+            connectionRepository.save(connection);
 
-        Connection connection = new Connection(false, userRepository.findByUsername(name), user); //false tarkoittaa, että ei vielä hyväksytty, kuka lisätään, kenelle lisätään
-        connectionRepository.save(connection);
-
-        return "requestsent";
+            return "requestsent";
+        }else{
+            return "personalreadyonyourconnections";
+        }
     }
 
     @PostMapping("/connectionapproval")
     public String connectionApproval(@RequestParam String accept, Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
+        String username = auth.getName();                                               
+        User user = userRepository.findByUsername(username);
         Connection connection = connectionRepository.getOne(id);
+        
+        for(Connection connectionOther:user.getConnections()){
+            if(connectionOther.getWhoasked().equals(connection.getWhowasasked() )&& connectionOther.getWhowasasked().equals(connection.getWhoasked())){
+                if(connectionOther.getAccepted()){
+                    connectionRepository.delete(connection);
+                    connection=connectionOther;
+                }else{
+                    connectionRepository.delete(connectionOther);
+                }
+            }
+        }
+        
+        
         if (accept.equals("Add connection!")) {
 
             connection.setAccepted(Boolean.TRUE);
             connectionRepository.save(connection);
-        } else {
+      
+        }else{
             connectionRepository.delete(connection);
         }
         return "redirect:/profile";

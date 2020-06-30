@@ -39,6 +39,9 @@ public class User extends AbstractPersistable<Long>{
     private List<Connection>connections=new ArrayList<>();
     @OneToMany(mappedBy="whowasasked")
     private List<Connection>askedconnections=new ArrayList<>();
+    @OneToMany(mappedBy="user")
+    private List<Post>postsbyuser=new ArrayList<>();
+    
     
 }
 

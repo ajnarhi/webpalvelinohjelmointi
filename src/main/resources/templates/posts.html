@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Posts</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div><h1>Posts made by you and your connections</h1></div>
+        
+        
+        <div th:each="post : ${posts}">
+                <p th:text="${post.message}">Post</p>
+        
+        
+        </div>
+
+        
+        
+        
+        
+        
+        
+        
+        <div>
+        <form th:action="@{/posts}"  method="POST">
+                <label>Write a post here:</label><br/>
+                <textarea id="id" name="message"rows="4" cols="50">
+  
+                </textarea><br/>
+
+                <input type="submit" value="Submit your post for others to see!"/>
+            </form>
+        
+        </div>
+
+
+</body>
+</html>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <p><a href="/profile">Go back to your profile!</a></p>
+        <p><a href="/findconnections">Find more connections</a></p>
+    </body>
+</html>

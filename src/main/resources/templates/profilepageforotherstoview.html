@@ -12,34 +12,36 @@ and open the template in the editor.
     </head>
     <body>
         <div>
-            
+
             <h2 th:text="${name}">Name of the profileowner</h2><p>'s profile! Welcome!</p>
         </div>
 
 
         <div>
-            
-            
-           
-               
-                    <p>Here are profileowners skills! You can compliment their skills if you wish to by pressing a button.</p>
-               
 
-                <div th:each="skill : ${skills}">
-                    <p th:text="${skill.nameOfTheSkill}">Skill name</p>
-                    <p th:text="${skill.timesComplimented}">Skill times complimented</p>
-                    <form th:action="@{/profile/{id}(id=${id})}"  method="POST">
+
+
+
+            <p>Here are profileowners skills! You can compliment their skills if you wish to by pressing a button.</p>
+
+
+            <div th:each="skill : ${skills}">
+                <p th:text="${skill.nameOfTheSkill}">Skill name</p>
+                <p>Complimented this many times</p><p th:text="${skill.timesComplimented}">Skill times complimented</p>
+                <form th:action="@{/profile/{id}(id=${id})}"  method="POST">
                     <input type="hidden" name="id" th:value="${skill.id}"/>
                     <input type="submit" name="compliment" value="Compliment this skill!"/>
-                           </form>
- </div>
-            
-          
-</div>
+                </form>
+            </div>
+
+
+        </div>
+
+        <p><a href="/profile">Go back to your profile!</a></p>
+        <p><a href="/findconnections">Find more connections</a></p>
+        <p><a href="/posts">See posts!</a></p>
 
 
 
-
-             
-                </body>
-                </html>
+    </body>
+</html>

@@ -19,10 +19,9 @@ and open the template in the editor.
 
         <div>
             <h2>Here are your skills you superskilled bastard!</h2>
+            <p>Skills</p>
             <table>
-                <tr>
-                    <th>Skills</th>
-                </tr>
+               
 
                 <tr th:each="skill : ${skills}">
                     <td th:text="${skill.nameOfTheSkill}">Skill name</td>
@@ -82,5 +81,10 @@ and open the template in the editor.
 
 
                 </div>
+            
+            
+            
+            <p><a href="/findconnections">Find more connections</a></p>
+            <p><a href="/posts">See posts!</a></p>
                 </body>
                 </html>
