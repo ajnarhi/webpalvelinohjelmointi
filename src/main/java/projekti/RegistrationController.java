@@ -70,6 +70,12 @@ public class RegistrationController {
                                       "This username is already in use.");
     bindingResult.addError(error);
 }
+              
+                          if (userRepository.findByUsername(user.getRealname())!=null) {
+            FieldError error = new FieldError("user", "realname",
+                                      "This name is already in use.");
+    bindingResult.addError(error);
+}
 
         
         
