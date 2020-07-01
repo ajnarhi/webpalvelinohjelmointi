@@ -13,7 +13,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     </head>
     <body>
-           <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <a class="navbar-brand" href="/profile">Navigate through Winkedin</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -29,7 +29,7 @@ and open the template in the editor.
                     <li class="nav-item">
                         <a class="nav-link" href="/posts">See posts from connections</a>
                     </li>
-              
+
                     <li class="nav-item">
                         <a class="nav-link" href="/signout">Sign out</a>
                     </li>    
@@ -37,14 +37,21 @@ and open the template in the editor.
 
             </div>  
         </nav>
-        <h1>You have succesfully signed out! Welcome again</h1>
-        
-        
-        You can register new user!
-        <p><a href="/registration">Registration</a></p>
-        
-        
-        Want to sign back in? 
-        <p><a href="/signin">Sign in!</a></p>
+        <div class="container">
+            <h1>You have succesfully signed out! Welcome back again later.</h1>
+        </div></br></br>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h3>You can register new user!</h3>
+                    <p><a href="/registration">Registration!</a></p>
+                </div>
+                <div class="col-6">
+
+                    <h3>Want to sign back in? </h3>
+                    <p><a href="/signin">Sign in!</a></p>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
