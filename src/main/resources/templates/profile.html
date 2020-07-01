@@ -9,67 +9,104 @@ and open the template in the editor.
         <title>Profile</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     </head>
     <body>
-        <div>
-            <h1>Welcome to your profile</h1>
-            <h2 th:text="${name}">Name of the profileowner</h2>
-        </div>
 
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="/profile">Navigate through Winkedin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Your profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/findconnections">Find connections</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts">See posts from connections</a>
+                    </li>
 
-        <div>
-            <h2>Here are your skills you superskilled bastard!</h2>
-            <p>Skills</p>
-            <table>
-               
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signout">Sign out</a>
+                    </li>    
+                </ul>
 
-                <tr th:each="skill : ${skills}">
-                    <td th:text="${skill.nameOfTheSkill}">Skill name</td>
-                </tr>
-            </table>
-
-
-            <p>Did you get yourself a new skill? Add it here so others can compliment you on it.</p>
-            <form th:action="@{/profile}"  method="POST">
-                <label>Type in your new skill:</label><br/>
-                <input type="text" name="skill"/><br/>
-
-                <input type="submit" value="Add skill to your list of skills!"/>
-            </form>
-
-        </div>
-
-        <div><h2>Your connections</h2></div>
-            <div th:each="connection : ${approvedconnections}">
-                <form th:action="@{/cancelconnection}"  method="POST">
-                    <a th:if ="${name==connection.whoasked.realname}"
-                       th:href="@{/profile/{id}(id=${connection.whowasasked.profileidentificationstring})}" 
-                       th:text="${connection.whowasasked.realname}">Connection name</a>
-                    <a th:if ="${name==connection.whowasasked.realname}"
-                       th:href="@{/profile/{id}(id=${connection.whoasked.profileidentificationstring})}" 
-                       th:text="${connection.whoasked.realname}">Connection name</a>
-
-                    <input type="hidden" name="id" th:value="${connection.id}"/>
-
-                    <input type="submit" name="cancel" value="Cancel connection!"/>
-                </form>
             </div>  
-            <div><h2>Connection requests waiting for approval from the person you sent it for</h2></div>
-                <div th:each="connection : ${waitingforotherpersonsapproval}">
-
-                    <p th:text="${name==connection.whoasked.realname}?${connection.whowasasked.realname}:${connection.whoasked.realname}">Connection name</p>
+        </nav>
 
 
+
+        <div class="container">
+            <h1>Welcome to your Winkedin profile <span th:text="${name}">Name of the profileowner</span>!</h1>
+        </div></br></br>
+
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h3>Here are your skills!</h3>
+
+
+
+                    <table>
+
+
+                        <tr th:each="skill : ${skills}">
+                            <td th:text="${skill.nameOfTheSkill}">Skill name</td>
+                        </tr>
+                    </table></br></br>
+                </div></br></br>
+                <div class="col-6">
+                    <h3>Did you get yourself a new skill? Add it here so others can compliment you on it.</h3>
+                    <form th:action="@{/profile}"  method="POST">
+                        <label>Type in your new skill:</label><br/>
+                        <input type="text" name="skill"/><br/>
+
+                        <input type="submit" value="Add skill to your list of skills!"/>
+                    </form></br></br>
+
+                </div></br></br>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h3>Your connections</h3>
+                    <div th:each="connection : ${approvedconnections}">
+                        <form th:action="@{/cancelconnection}"  method="POST">
+                            <a th:if ="${name==connection.whoasked.realname}"
+                               th:href="@{/profile/{id}(id=${connection.whowasasked.profileidentificationstring})}" 
+                               th:text="${connection.whowasasked.realname}">Connection name</a>
+                            <a th:if ="${name==connection.whowasasked.realname}"
+                               th:href="@{/profile/{id}(id=${connection.whoasked.profileidentificationstring})}" 
+                               th:text="${connection.whoasked.realname}">Connection name</a>
+
+                            <input type="hidden" name="id" th:value="${connection.id}"/>
+
+                            <input type="submit" name="cancel" value="Cancel connection!"/>
+                        </form>
+                    </div></br></br>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h3>Connection requests waiting for approval from the person you sent it for</h3>
+                    <div th:each="connection : ${waitingforotherpersonsapproval}">
+                        <p th:text="${name==connection.whoasked.realname}?${connection.whowasasked.realname}:${connection.whoasked.realname}">Connection name</p>
+                    </div>
                 </div>
 
-
-                <div>
-
-
-
-                    <h2>Connection requests waiting for your approval</h2>
-
-
+                <div class="col-6">
+                    <h3>Connection requests waiting for your approval</h3>
                     <div th:each="connection : ${waitingforyourapproval}">
                         <form th:action="@{/connectionapproval}"  method="POST">
                             <p th:text="${connection.whoasked.realname}">Connection name</p>
@@ -78,13 +115,9 @@ and open the template in the editor.
                             <input type="submit" name="accept" value="I do not approve this connection!"/>
                         </form>
                     </div>
-
-
                 </div>
-            
-            
-            
-            <p><a href="/findconnections">Find more connections</a></p>
-            <p><a href="/posts">See posts!</a></p>
-                </body>
-                </html>
+            </div>
+        </div>
+
+    </body>
+</html>

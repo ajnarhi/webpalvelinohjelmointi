@@ -28,17 +28,16 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
         http.authorizeRequests()
                 .antMatchers("/h2-console", "/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
-                .antMatchers(HttpMethod.GET, "/profile").authenticated()
-                .anyRequest().permitAll();
-        http.formLogin()
+                .antMatchers("/registration").permitAll()
+                .anyRequest().authenticated();
+        http.formLogin().loginPage("/signin").defaultSuccessUrl("/profile")
+                .permitAll().and()
+            .logout().logoutUrl("/signout")   .logoutSuccessUrl("/signoutshow")
                 .permitAll();
+    
     }
 
-//    @Override
-//    public void configure(WebSecurity sec) throws Exception {
-//        // Pyyntöjä ei tarkasteta
-//        sec.ignoring().antMatchers("/**");
-//    }
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean()throws Exception{

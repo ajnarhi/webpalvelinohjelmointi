@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Sign in!</title>
+        <title>Sign out</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -37,22 +37,14 @@ and open the template in the editor.
 
             </div>  
         </nav>
-        <div class="container"> 
-            <h1>Sign in to Winkedin!</h1><br/>
-        </div></br></br>
-        <div class="container"> 
-            <form action="/signin"  method="POST">
-                <label>User name:</label><br/>
-                <input type="text" name="username"/><br/>
-                <label>Password:</label><br/>
-                <input type="password" name="password"/><br/>
-                <input type="submit" value="Sign in!"/>
-            </form><br>
-        </div></br></br>
-
-        <div class="container">
-            <h3>Are you new? Register yourself!</h3>
-            <p><a href="/registration">Registration!</a></p>
-        </div>
+        <h1>You have succesfully signed out! Welcome again</h1>
+        
+        
+        You can register new user!
+        <p><a href="/registration">Registration</a></p>
+        
+        
+        Want to sign back in? 
+        <p><a href="/signin">Sign in!</a></p>
     </body>
 </html>

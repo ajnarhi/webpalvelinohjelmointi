@@ -46,8 +46,18 @@ public class ProfileController {
     
     @GetMapping("/profile/{id}")
     public String personalPageForOthersToView(Model model,@PathVariable String id){
-        
         User userForOthersToView=userRepository.findByProfileidentificationstring(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //tarkistetaan onko lupa katsoa hekilön profiilia
+        String username = auth.getName();
+        User user = userRepository.findByUsername(username);
+        
+        Connection connection=new Connection(true, userForOthersToView, user);
+        Connection connectionOther=new Connection(true, user, userForOthersToView);
+        if(user.getConnections().contains(connection)||user.getAskedconnections().contains(connectionOther)){
+        
+        
+        
+        
         model.addAttribute("name", userForOthersToView.getRealname());
         model.addAttribute("id",userForOthersToView.getProfileidentificationstring() );
         model.addAttribute("skills", userForOthersToView.getSkills());
@@ -56,6 +66,8 @@ public class ProfileController {
         
         
         return "profilepageforotherstoview";
+        }
+        return "redirect:/profile";
     }
     
     

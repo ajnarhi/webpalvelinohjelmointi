@@ -29,9 +29,18 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Table(name = "Usertable")
 public class User extends AbstractPersistable<Long>{
     
+    @NotEmpty
+    @Size(min = 4, max = 20)
     private String username;
+    @NotEmpty
+    @Size(min = 4)
     private String password;
+    @NotEmpty
+    @Size(min = 4, max = 20)
     private String realname;
+    
+    @NotEmpty
+    @Size(min = 4, max = 20)
     private String profileidentificationstring;
     @OneToMany(mappedBy = "user")
     private List<Skill> skills= new ArrayList<>();

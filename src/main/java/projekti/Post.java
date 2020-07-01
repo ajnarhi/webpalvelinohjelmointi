@@ -5,7 +5,9 @@
  */
 package projekti;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -24,10 +26,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Post extends AbstractPersistable<Long> {
     
+    
+    private LocalDateTime date;
+    private String message;
     @ManyToOne
     private User user;
-    //private Date date;
-    private String message;
     
     
 }

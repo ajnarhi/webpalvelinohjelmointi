@@ -9,50 +9,65 @@ and open the template in the editor.
         <title>Posts</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     </head>
     <body>
-        <div><h1>Posts made by you and your connections</h1></div>
-        
-        
-        <div th:each="post : ${posts}">
-                <p th:text="${post.message}">Post</p>
-        
-        
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="/profile">Navigate through Winkedin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Your profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/findconnections">Find connections</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts">See posts from connections</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signout">Sign out</a>
+                    </li>    
+                </ul>
+
+            </div>  
+        </nav>
+        <div class="container">
+            <h3>Posts made by you and your connections</h3><br/><br/>
         </div>
 
-        
-        
-        
-        
-        
-        
-        
-        <div>
-        <form th:action="@{/posts}"  method="POST">
-                <label>Write a post here:</label><br/>
+<div class="container">
+        <div th:each="post : ${posts}">
+            <p><span th:text="${post.message}">Post</span></p>
+            <p>Sent by:  <span th:text="${post.user.realname}">Name of user who posted</span>
+                Time:  <span th:text="${post.date}">Time of posting</span></p></br></br>
+        </div>
+
+</div>
+
+
+
+
+
+
+        <div class="container">
+            <form th:action="@{/posts}"  method="POST">
+                <label>Write a new post here:</label></br>
                 <textarea id="id" name="message"rows="4" cols="50">
   
                 </textarea><br/>
 
-                <input type="submit" value="Submit your post for others to see!"/>
+                <input type="submit" value="Submit your post for your connections to see!"/>
             </form>
-        
+
         </div>
 
 
-</body>
-</html>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <p><a href="/profile">Go back to your profile!</a></p>
-        <p><a href="/findconnections">Find more connections</a></p>
     </body>
 </html>
+

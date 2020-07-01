@@ -41,6 +41,10 @@ Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //
         String username = auth.getName();                                               //koska on käyttäjä kirjautuneena niin Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
         User user = userRepository.findByUsername(username);
         User searcheduser = userRepository.findByRealname(name);
+        if(searcheduser==null){
+            model.addAttribute("usernotfound", true);
+            return "findconnections";
+        }
         if(!user.getRealname().equals(searcheduser.getRealname())){
         model.addAttribute("user", searcheduser);
 

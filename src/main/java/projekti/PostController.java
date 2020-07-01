@@ -5,9 +5,13 @@
  */
 package projekti;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -65,8 +69,8 @@ public class PostController {
         String username = auth.getName();
 
         User user = userRepository.findByUsername(username);
-        
-        Post post=new Post(user, message);
+        LocalDateTime date=LocalDateTime.now();
+        Post post=new Post(date,message, user);
         postRepository.save(post);
         
         return "redirect:/posts";

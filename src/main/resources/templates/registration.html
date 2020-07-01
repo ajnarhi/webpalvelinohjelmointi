@@ -9,22 +9,56 @@ and open the template in the editor.
         <title>Registration</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     </head>
     <body>
-        <div>Register yourself on this amazing new Linkedin type thing!</div>
+           <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="/profile">Navigate through Winkedin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Your profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/findconnections">Find connections</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts">See posts from connections</a>
+                    </li>
+              
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signout">Sign out</a>
+                    </li>    
+                </ul>
+
+            </div>  
+        </nav>
         
-        <form action="/registration"  method="POST">
+        <div class="container">
+        <h1>Register to Winkedin!</h1><br/>
+        </div>
+        <div class="container">
+        <form th:action="@{/registration}" th:object="${user}"  method="POST">
             <label>User name:</label><br/>
-    <input type="text" name="username"/><br/>
+    <input type="text" th:field="*{username}"/><br/><br/>
+    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username Error</p>
     <label>Password:</label><br/>
-    <input type="password" name="password"/><br/>
+    <input type="password" th:field="*{password}"/><br/><br/>
+    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</p>
      <label>Your name:</label><br/>
-   <input type="text" name="realname"/><br/>
-    <label>Give string of letters or numbers so your URL can be recognised. TÄHÄN PAREMPI TEKSTI</label><br/>
-   <input type="text" name="profileidentificationstring"/><br/>
-    <input type="submit" value="Register"/>
+   <input type="text" th:field="*{realname}"/><br/><br/>
+   <p th:if="${#fields.hasErrors('realname')}" th:errors="*{realname}">realname Error</p>
+    <label>Give string of letters or numbers so your URL can be recognised.</label><br/>
+   <input type="text" th:field="*{profileidentificationstring}"/><br/><br/>
+   <p th:if="${#fields.hasErrors('profileidentificationstring')}" th:errors="*{profileidentificationstring}">profileidentificationstring Error</p>
+    <input type="submit" value="Register!"/>
 </form>
-        
+        </div>
+    
         
     </body>
 </html>

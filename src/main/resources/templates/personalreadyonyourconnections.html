@@ -6,13 +6,39 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Mistake</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     </head>
     <body>
-        <h2>The person you tried to add is already on your connections or you have already sent them a connection request!</h2>
-         <p><a href="/profile">Go back to your profile!</a></p>
-        <p><a href="/findconnections">Find more connections</a></p>
+           <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="/profile">Navigate through Winkedin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Your profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/findconnections">Find connections</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts">See posts from connections</a>
+                    </li>
+              
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signout">Sign out</a>
+                    </li>    
+                </ul>
+
+            </div>  
+        </nav>
+        <div class="container">
+        <h3>The person you tried to add is already on your connections or you have already sent them a connection request!</h3>
+    </div>
     </body>
 </html>

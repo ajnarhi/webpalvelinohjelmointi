@@ -20,6 +20,7 @@ import static org.springframework.security.web.context.HttpSessionSecurityContex
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +45,7 @@ public class RegistrationController {
     AuthenticationManager authenticationManager;
 
     @GetMapping("/registration")
-    public String registrationMain() {
+    public String registrationMain(@ModelAttribute User user) {
         return "registration";
     }
 
@@ -56,7 +57,25 @@ public class RegistrationController {
     
 
     @PostMapping("/registration")
-    public String createNewUser(@ModelAttribute User user, HttpSession session) {
+    public String createNewUser(@Valid @ModelAttribute User user, BindingResult bindingResult,HttpSession session) {
+        
+        
+        if (userRepository.findByProfileidentificationstring(user.getProfileidentificationstring())!=null) {
+            FieldError error = new FieldError("user", "profileidentificationstring",
+                                      "This identification string is already in use.");
+    bindingResult.addError(error);
+}
+              if (userRepository.findByUsername(user.getUsername())!=null) {
+            FieldError error = new FieldError("user", "username",
+                                      "This username is already in use.");
+    bindingResult.addError(error);
+}
+
+        
+        
+         if(bindingResult.hasErrors()) {
+        return "registration";
+    }
         String usersUnsecuredPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -80,19 +99,4 @@ public class RegistrationController {
     
     
     
-
-//    EHKÄ OMA SISÄÄNKIRJAUTUMISSIVU? 
-    
-    
-    //@PostMapping("/signin")
-//    public String signUserIn(@RequestParam String username, @RequestParam String password){
-//    user=userRepository.findByUsernameAndPassword(username, password);
-//   
-//    return "redirect:/profile";
-//}
 }
-//    @GetMapping("/signin")
-//    public String signIn(){
-//        
-//        return "signin";
-//    }
