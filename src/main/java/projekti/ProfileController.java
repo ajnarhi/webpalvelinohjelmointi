@@ -42,45 +42,36 @@ public class ProfileController {
 
     @Autowired
     ConnectionRepository connectionRepository;
-    
-    
+
     @GetMapping("/profile/{id}")
-    public String personalPageForOthersToView(Model model,@PathVariable String id){
-        User userForOthersToView=userRepository.findByProfileidentificationstring(id);
+    public String personalPageForOthersToView(Model model, @PathVariable String id) {
+        User userForOthersToView = userRepository.findByProfileidentificationstring(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //tarkistetaan onko lupa katsoa hekilön profiilia
         String username = auth.getName();
         User user = userRepository.findByUsername(username);
-        
-        Connection connection=new Connection(true, userForOthersToView, user);
-        Connection connectionOther=new Connection(true, user, userForOthersToView);
-        if(user.getConnections().contains(connection)||user.getAskedconnections().contains(connectionOther)){
-        
-        
-        
-        
-        model.addAttribute("name", userForOthersToView.getRealname());
-        model.addAttribute("id",userForOthersToView.getProfileidentificationstring() );
-        model.addAttribute("skills", userForOthersToView.getSkills());
-        
-       
-        
-        
-        return "profilepageforotherstoview";
+
+        Connection connection = new Connection(true, userForOthersToView, user);
+        Connection connectionOther = new Connection(true, user, userForOthersToView);
+        if (user.getConnections().contains(connection) || user.getAskedconnections().contains(connectionOther)) {
+
+            model.addAttribute("name", userForOthersToView.getRealname());
+            model.addAttribute("id", userForOthersToView.getProfileidentificationstring());
+            model.addAttribute("skills", userForOthersToView.getSkills());
+
+            return "profilepageforotherstoview";
         }
         return "redirect:/profile";
     }
-    
-    
+
     @PostMapping("/profile/{userid}")
-    public String personalPageForOthersToView(@RequestParam Long id, @PathVariable String userid){
-        User userForOthersToView=userRepository.findByProfileidentificationstring(userid);
-        Skill skill=skillRepository.getOne(id);
-        int compliments=skill.getTimesComplimented();
+    public String personalPageForOthersToView(@RequestParam Long id, @PathVariable String userid) {
+
+        Skill skill = skillRepository.getOne(id);
+        int compliments = skill.getTimesComplimented();
         compliments++;
         skill.setTimesComplimented(compliments);
         skillRepository.save(skill);
-        
-        
+
         return "redirect:/profile/{userid}";
     }
 
@@ -94,7 +85,7 @@ public class ProfileController {
         connections.addAll(connectionRepository.findByWhoaskedAndAccepted(user, Boolean.TRUE));
         model.addAttribute("name", user.getRealname());
         model.addAttribute("skills", user.getSkills());
-
+        model.addAttribute("skill", new Skill());
         model.addAttribute("waitingforotherpersonsapproval", connectionRepository.findByWhoaskedAndAccepted(user, Boolean.FALSE));
         model.addAttribute("waitingforyourapproval", connectionRepository.findByWhowasaskedAndAccepted(user, Boolean.FALSE));
         model.addAttribute("approvedconnections", connections);
@@ -103,12 +94,23 @@ public class ProfileController {
     }
 
     @PostMapping("/profile")
-    public String addSkillToUser(@RequestParam String skill) {
+    public String addSkillToUser(@Valid @ModelAttribute Skill skill, BindingResult bindingResult, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //user pitää hakea tässä uudelleen, että saadaan skillsi oikealle käyttäjälle. Muuten se voisi mennä välissä kirjautuneelle esim.
         String username = auth.getName();                                               //koska on käyttäjä kirjautuneena niin Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
         User user = userRepository.findByUsername(username);                            //voidaan hakea juuri se käyttäjä.
+        if (bindingResult.hasErrors()) {
+            List<Connection> connections = connectionRepository.findByWhowasaskedAndAccepted(user, Boolean.TRUE);
+            connections.addAll(connectionRepository.findByWhoaskedAndAccepted(user, Boolean.TRUE));
+            model.addAttribute("name", user.getRealname());
+            model.addAttribute("skills", user.getSkills());
 
-        Skill newSkill = new Skill(skill,0, user);
+            model.addAttribute("waitingforotherpersonsapproval", connectionRepository.findByWhoaskedAndAccepted(user, Boolean.FALSE));
+            model.addAttribute("waitingforyourapproval", connectionRepository.findByWhowasaskedAndAccepted(user, Boolean.FALSE));
+            model.addAttribute("approvedconnections", connections);
+            return "profile";
+        }
+
+        Skill newSkill = new Skill(skill.getNameOfTheSkill(), 0, user);
         skillRepository.save(newSkill);
         skillRepository.flush();
 

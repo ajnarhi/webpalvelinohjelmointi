@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,22 +20,19 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  *
  * @author ajnarhi
  */
-
 @Entity
-@Data 
-@NoArgsConstructor 
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Post extends AbstractPersistable<Long> {
-    
-    
+
     private LocalDateTime date;
+    @NotEmpty
     private String message;
     @ManyToOne
     private User user;
-    
-    
-}
 
+}
 
 //Kirjautuneet käyttäjät voivat lähettää postauksia yhteisellä sivulla. Postaussivulla näkyy yhteydessä olevien henkilöiden postaukset. 
 //Jokaisesta viestistä näytetään viestin lähettäjän nimi, viestin lähetysaika, sekä viestin tekstimuotoinen sisältö.

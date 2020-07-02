@@ -51,14 +51,12 @@ and open the template in the editor.
 </div>
 
         <div class="container">
-            <form th:action="@{/posts}"  method="POST">
+            <form th:action="@{/posts}" th:object="${post}" method="POST">
                 <label>Write a new post here:</label></br>
-                <textarea id="id" name="message"rows="4" cols="50">
-  
-                </textarea><br/>
-
+                <textarea id="id" th:field="*{message}" rows="4" cols="50"></textarea><br/>
+                <p th:if="${#fields.hasErrors('message')}" th:errors="*{message}">message Error</p>
                 <input type="submit" value="Submit your post for your connections to see!"/>
-            </form>
+            </form></br></br>
 
         </div>
 

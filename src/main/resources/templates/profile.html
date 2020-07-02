@@ -67,12 +67,15 @@ and open the template in the editor.
                 </div></br></br>
                 <div class="col-6">
                     <h3>Did you get yourself a new skill? Add it here so others can compliment you on it.</h3>
-                    <form th:action="@{/profile}"  method="POST">
+                    <form th:action="@{/profile}" th:object="${skill}" method="POST">
                         <label>Type in your new skill:</label><br/>
-                        <input type="text" name="skill"/><br/>
+                        <input type="text" th:field="*{nameOfTheSkill}"/><br/>
+                        <p th:if="${#fields.hasErrors('nameOfTheSkill')}" th:errors="*{nameOfTheSkill}">skill Error</p>
 
                         <input type="submit" value="Add skill to your list of skills!"/>
                     </form></br></br>
+                        
+                            
 
                 </div></br></br>
             </div>
